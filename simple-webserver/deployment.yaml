@@ -4,6 +4,12 @@ kind: Namespace
 metadata:
   name: win-test-workload
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: runwinweb
+  namespace: win-test-workload
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -47,6 +53,7 @@ spec:
       nodeSelector:
         kubernetes.io/os: windows
       restartPolicy: Always
+      serviceAccountName: runwinweb
       terminationGracePeriodSeconds: 30
       tolerations:
       - key: os
