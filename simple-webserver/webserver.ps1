@@ -8,7 +8,7 @@ $http = [System.Net.HttpListener]::new()
 
 # Hostname and port to listen on
 #$http.Prefixes.Add("http://localhost:80/")
-$http.Prefixes.Add("http://+:80/")
+$http.Prefixes.Add("http://+:8080/")
 #$http.Prefixes.Add("http://0.0.0.0:80/")
 
 # Start the Http Server 

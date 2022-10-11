@@ -12,7 +12,9 @@ WORKDIR /app
 COPY --from=build-env /app/webserver.ps1 .
 COPY --from=build-env /app/LogMonitor.exe .
 
-EXPOSE 80
+EXPOSE 8080
+
+#USER 1001
 
 SHELL ["C:\\LogMonitor\\LogMonitor.exe", "cmd", "/S", "/C"]
 CMD ["powershell", "-File", "/app/webserver.ps1"]

@@ -38,17 +38,17 @@ spec:
     spec:
       containers:
       - name: win-webserver
-        command:
-        - powershell
-        - -File
-        - webserver.ps1
-        image: quay.revoweb.com/nrevo/webserver
+        image: quay.revoweb.com/nrevo/webserver:1.0.4
         imagePullPolicy: IfNotPresent
         securityContext:
+#          allowPrivilegeEscalation: true
+#          runAsNonRoot: true
           windowsOptions:
             runAsUserName: ContainerAdministrator
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        ports:
+          - containerPort: 8080
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: windows
@@ -68,9 +68,9 @@ metadata:
   name: win-webserver
   namespace: win-test-workload
 spec:
-  clusterIP: 172.30.18.48
-  clusterIPs:
-  - 172.30.18.48
+#  clusterIP: 172.30.18.48
+#  clusterIPs:
+#  - 172.30.18.48
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
@@ -78,7 +78,7 @@ spec:
   ports:
   - port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: win-webserver
   sessionAffinity: None
@@ -95,7 +95,7 @@ metadata:
 spec:
   host: web-win-test-workload.apps.ocs.openshift.works
   port:
-    targetPort: 80
+    targetPort: 8080
   tls:
     termination: edge
   to:
