@@ -18,3 +18,5 @@ oc adm policy add-scc-to-user anyuid -z runwinweb -n win-test-workload
 oc apply -f deployment.yaml
 ```
 
+The pod logs should look like this:
+<img width="348" alt="image" src="https://user-images.githubusercontent.com/5229889/196250421-a6c8df49-79ea-43f7-b6d0-e0e4a50c57f9.png">
