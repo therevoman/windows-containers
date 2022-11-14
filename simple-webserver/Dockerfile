@@ -1,10 +1,10 @@
-FROM mcr.microsoft.com/windows/server:ltsc2022 AS build-env
+FROM mcr.microsoft.com/windows/servercore:ltsc2022 AS build-env
 WORKDIR /app
 
 COPY webserver.ps1 ./
 ADD https://github.com/microsoft/windows-container-tools/releases/download/v1.2/LogMonitor.exe ./
 
-FROM mcr.microsoft.com/windows/server:ltsc2022
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 #FROM mcr.microsoft.com/powershell
 # escape=` (backtick)
 
