@@ -1,6 +1,13 @@
 # This is a super **SIMPLE** example of how to create a very basic powershell webserver
-# 2019-05-18 UPDATE — Created by me and and evalued by @jakobii and the comunity.
+# 2019-05-18 UPDATE ï¿½ Created by @chernandez and and evalued by @jakobii and the comunity.
+# 2022-10-01 UPDATE Modified to work on servercore:ltsc2022
 write-host " HTTP Server Starting!  "
+write-host "Hostname: " + [system.environment]::MachineName
+
+foreach ($ip in (Get-NetIPAddress -AddressFamily IPV4).IPAddress)
+{
+    write-host "IPAddress: $($ip)"
+}
 
 # Http Server
 $http = [System.Net.HttpListener]::new()
@@ -13,7 +20,6 @@ $http.Prefixes.Add("http://+:8080/")
 
 # Start the Http Server 
 $http.Start()
-
 
 
 # Log ready message to terminal 
@@ -45,7 +51,15 @@ while ($http.IsListening) {
 
         # the html/data you want to send to the browser
         # you could replace this with: [string]$html = Get-Content "C:\some\path\index.html" -Raw
-        [string]$html = "<h1>A Powershell Webserver</h1><p>home page</p>" 
+        [string]$html = "<h1>A Powershell Webserver</h1>"
+#        [string]$html += "<p>home page</p>"[System.Net.Dns]::GetHostName()
+        [string]$html += "<h3>hostname: $([system.environment]::MachineName)</h3><p></p> "
+
+        foreach ($ip in (Get-NetIPAddress -AddressFamily IPV4).IPAddress)
+        {
+            [string]$html += "<h2>&nbsp;&nbsp;&nbsp;IPAddress: $($ip)</h2><p></p> "
+        }
+        [string]$html += "<p>$($context.Request.UserHostName)</p><p></p> "
         
         #resposed to the request
         $buffer = [System.Text.Encoding]::UTF8.GetBytes($html) # convert htmtl to bytes
